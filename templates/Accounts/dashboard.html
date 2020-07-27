@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} | User Dashboard {% endblock %}
+
+{% block content %}
+
+    <h2>Hi {{ user.first_name }}</h2>
+    <h3>Please Send your information to us </h3>
+    <!-- Inquiry Modal -->
+<div style="margin-left: 50px;margin-right:50px;width:400px">
+                <form action="{% url 'contact' %}" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                    {% else %}
+                        <input type="hidden" name="user_id" value="0">
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">نام:</label>
+                        <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">نام خانوادگی:</label>
+                        <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="col-form-label">شماره همراه:</label>
+                        <input type="text" name="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">انچه درباره تکانه میدانید:</label>
+                        <textarea name="message" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">علت انتخاب تکانه:</label>
+                        <textarea name="takane" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">رشته تحصیلی:</label>
+                        <textarea name="field" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">مهارت ها:</label>
+                        <textarea name="ability" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-form-label">هم اکنون در چه زمینه ای میتوانید با تکانه همکاری کنید:</label>
+                        <textarea name="takane_now" class="form-control"></textarea>
+                    </div>
+
+                    
+                    <hr>
+                    <input type="submit" value="Send" class="btn btn-block btn-secondary">
+                </form>
+            </div><br>
+            
+{% endblock %}
